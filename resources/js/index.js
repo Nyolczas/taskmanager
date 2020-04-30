@@ -10,7 +10,7 @@ import {
 import AppRoot from './components/AppRoot.jsx';
 import Topics from './components/Topics.jsx';
 import About from './components/About.jsx';
-
+import TaskEdit from './components/TaskEdit.jsx';
 
 if (document.getElementById('root')) {
     ReactDOM.render(
@@ -36,6 +36,7 @@ if (document.getElementById('root')) {
                 <Route exact path="/" component={AppRoot} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/topics" component={Topics} />
+                <Route exact path="/:id/edit" component={TaskEdit} />
                 <AppRoot />
             </Switch>
         </div>

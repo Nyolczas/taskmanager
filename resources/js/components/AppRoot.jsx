@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class AppRoot extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class AppRoot extends Component {
                     <div className="d-flex align-items-center justify-content-between">
                         <p className="mb-0">{task.name}</p>
                         <div className="d-flex">
-                            <button className="btn btn-info btn-sm mr-2">Szerkesztés</button>
+                            <Link to={`/${task.id}/edit`} className="btn btn-info btn-sm mr-2">Szerkesztés</Link>
                             <button 
                                 onClick={()=>this.handleDelete(task.id)} 
                                 className="btn btn-danger btn-sm" 
