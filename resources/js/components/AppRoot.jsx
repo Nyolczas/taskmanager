@@ -10,6 +10,7 @@ class AppRoot extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.renderTasks = this.renderTasks.bind(this);
     }
 
     handleChange(e) {
@@ -24,8 +25,24 @@ class AppRoot extends Component {
         axios.post('/tasks', {
             name: this.state.name
         }).then(response => {
-            console.log('from handle submit: ', response);
+            //console.log('from handle submit: ', response);
+            this.setState({
+                tasks: [response.data, ...this.state.tasks],
+                name: ''
+            })
         });
+    }
+
+    renderTasks() {
+        return this.state.tasks.map(task => (
+            <div key={task.id} className="media">
+                <div className="media-body">
+                    <div>
+                        {task.name}
+                    </div>
+                </div>
+            </div>
+        ));
     }
 
     render() {
@@ -53,6 +70,8 @@ class AppRoot extends Component {
                                         Létrehozás
                                     </button>
                                 </form>
+                                <hr/>
+                                {this.renderTasks()}
                             </div>
                         </div>
                     </div>
