@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
 
 class AppRoot extends Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class AppRoot extends Component {
             tasks: []
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(e) {
@@ -15,6 +17,15 @@ class AppRoot extends Component {
             name: e.target.value
         });
        //console.log(e.target.value);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        axios.post('/tasks', {
+            name: this.state.name
+        }).then(response => {
+            console.log('from handle submit: ', response);
+        });
     }
 
     render() {
@@ -26,7 +37,7 @@ class AppRoot extends Component {
                             <div className="card-header">Feladat Lista</div>
     
                             <div className="card-body">
-                                <form>
+                                <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <textarea 
                                             onChange = {this.handleChange}
