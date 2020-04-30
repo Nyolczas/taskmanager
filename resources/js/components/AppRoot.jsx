@@ -45,6 +45,21 @@ class AppRoot extends Component {
         ));
     }
 
+    //read from backend
+    getTasks() {
+        axios.get('/tasks').then(response => 
+            this.setState({
+                tasks: [...response.data.tasks]
+            })
+        );
+    }
+
+    componentWillMount() {
+        this.getTasks();
+    }
+
+
+
     render() {
         return (
             <div className="container">
