@@ -65914,8 +65914,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -65952,7 +65950,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var AppRoot = /*#__PURE__*/function (_Component) {
   _inherits(AppRoot, _Component);
 
@@ -65970,7 +65967,8 @@ var AppRoot = /*#__PURE__*/function (_Component) {
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.renderTasks = _this.renderTasks.bind(_assertThisInitialized(_this));
+    _this.renderTasks = _this.renderTasks.bind(_assertThisInitialized(_this)); //this.handleDelete = this.handleDelete(this); // ezt nem kell bind-olni, merrt nincs benne a lifecycle-ban!
+
     return _this;
   }
 
@@ -66000,31 +65998,62 @@ var AppRoot = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderTasks",
     value: function renderTasks() {
+      var _this3 = this;
+
       return this.state.tasks.map(function (task) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: task.id,
           className: "media"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "media-body"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, task.name)));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "d-flex align-items-center justify-content-between"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "mb-0"
+        }, task.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "d-flex"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-info btn-sm mr-2"
+        }, "Szerkeszt\xE9s"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this3.handleDelete(task.id);
+          },
+          className: "btn btn-danger btn-sm"
+        }, "T\xF6rl\xE9s"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
       });
     } //read from backend
 
   }, {
     key: "getTasks",
     value: function getTasks() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('/tasks').then(function (response) {
-        return _this3.setState({
+        return _this4.setState({
           tasks: _toConsumableArray(response.data.tasks)
         });
       });
     }
   }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       this.getTasks();
+    } // handle delete
+
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      // remove from local state
+      var isNotId = function isNotId(task) {
+        return task.id !== id;
+      };
+
+      var updatedTasks = this.state.tasks.filter(isNotId);
+      this.setState({
+        tasks: updatedTasks
+      }); // make delete request to the backend
+
+      axios["delete"]("/tasks/".concat(id));
     }
   }, {
     key: "render",

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
 
 class AppRoot extends Component {
     constructor(props) {
@@ -11,6 +10,7 @@ class AppRoot extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderTasks = this.renderTasks.bind(this);
+        //this.handleDelete = this.handleDelete(this); // ezt nem kell bind-olni, merrt nincs benne a lifecycle-ban!
     }
 
     handleChange(e) {
@@ -37,9 +37,17 @@ class AppRoot extends Component {
         return this.state.tasks.map(task => (
             <div key={task.id} className="media">
                 <div className="media-body">
-                    <div>
-                        {task.name}
+                    <div className="d-flex align-items-center justify-content-between">
+                        <p className="mb-0">{task.name}</p>
+                        <div className="d-flex">
+                            <button className="btn btn-info btn-sm mr-2">Szerkesztés</button>
+                            <button 
+                                onClick={()=>this.handleDelete(task.id)} 
+                                className="btn btn-danger btn-sm" 
+                            >Törlés</button>
+                        </div>
                     </div>
+                    <hr/>
                 </div>
             </div>
         ));
@@ -54,8 +62,18 @@ class AppRoot extends Component {
         );
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getTasks();
+    }
+
+    // handle delete
+    handleDelete(id) {
+        // remove from local state
+        const isNotId = task => task.id !== id;
+        const updatedTasks = this.state.tasks.filter(isNotId);
+        this.setState({ tasks: updatedTasks });
+        // make delete request to the backend
+        axios.delete(`/tasks/${id}`);
     }
 
 
