@@ -12,7 +12,19 @@ class TopicsController extends Controller
 
     public function index()
     {
-        //
+        $categories = [2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020];
+        $name1 = "";
+        $data1 = "";
+        $name2 = "";
+        $data2 = "";
+        // return json response
+        return response()->json([
+            'categories' => $categories,
+            'name1' => $name1,
+            'data1' => $data1,
+            'name2' => $name2,
+            'data2' => $data2,
+        ]);
     }
 
     public function create()
