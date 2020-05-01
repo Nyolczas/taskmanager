@@ -20,7 +20,6 @@ class TaskEdit extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state.name);
         axios.put(`/tasks/${this.props.match.params.id}`, {
             name: this.state.name
         }).then(this.props.history.push('/'));
