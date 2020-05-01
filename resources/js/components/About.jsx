@@ -25,7 +25,7 @@ class About extends Component {
     renderParagraphs() {
         let key = 0;
         return this.state.paragraphs.map(paragraph => (
-            <p key={key++}>{paragraph}</p>
+            <p key={key++} style={{ color: "gray" }}>{paragraph}</p>
         ));
     }
 

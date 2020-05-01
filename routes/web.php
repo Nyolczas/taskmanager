@@ -23,3 +23,4 @@ Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 
 Route::resource('tasks', 'TaskController');
 Route::resource('about', 'AboutController');
+Route::resource('topics', 'TopicsController');
