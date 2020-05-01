@@ -3,27 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Topics;
 
 class TopicsController extends Controller
 {
-    public function __construct() {
+    public function __construct(Topics $topics) {
         $this->middleware('auth');
+        $this->topics = $topics;
     }
 
     public function index()
     {
-        $categories = [2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020];
-        $name1 = "";
-        $data1 = "";
-        $name2 = "";
-        $data2 = "";
+        
         // return json response
         return response()->json([
-            'categories' => $categories,
-            'name1' => $name1,
-            'data1' => $data1,
-            'name2' => $name2,
-            'data2' => $data2,
+            'data' => Topics::all()
         ]);
     }
 
@@ -34,7 +28,18 @@ class TopicsController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $topics = new Topics();
+
+        $topics->date = $request->input('date');
+        $topics->s11 = floatval($request->input('s11'));
+        $topics->s12 = floatval($request->input('s12'));
+        $topics->s21 = floatval($request->input('s21'));
+        $topics->s22 = floatval($request->input('s22'));
+
+        if($topics->save()) {
+            return $topics;
+          }
+        return false;
     }
 
     public function show($id)

@@ -40,42 +40,92 @@ class Topics extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    getTopics() {
+        axios.get('/topics').then(response =>
+            console.log(response.data)
+            /*
+                this.setState({
+                    options1: {
+                        xaxis: {
+                            categories: [...response.data.date]
+                        }
+                    },
+                    series1: [
+                        {
+                            name: "Series1-1",
+                            data: [...response.data.s11],
+                            type: "bar"
+                        }, 
+                        {
+                            name: "Series1-2",
+                            data: [...response.data.s12],
+                            type: "line"
+                        }, 
+                    ],
+                    series2: [
+                        {
+                            name: "Series2-1",
+                            data: [...response.data.s21],
+                            type: "area"
+                        }, 
+                        {
+                            name: "Series2-2",
+                            data: [...response.data.s22],
+                            type: "bar"
+                        }, 
+                    ]
+                }) */
+            );
+    }
+
+    componentDidMount() {
+        this.getTopics();
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         e.persist();
         //console.log(e.target.date.value);
-        
-        this.setState((prevState) => ({
-            options1: {
-                xaxis: {
-                    categories: [...prevState.options1.xaxis.categories, e.target.date.value]
-                }
-            },
-            series1: [
-                {
-                    name: prevState.series1[0].name,
-                    data: [...prevState.series1[0].data, e.target.s11.value],
-                    type: prevState.series1[0].type
+        axios.post('/topics', {
+            date: e.target.date.value,
+            s11: e.target.s11.value,
+            s12: e.target.s12.value,
+            s21: e.target.s21.value,
+            s22: e.target.s22.value
+        }).then(response => {
+            //console.log('from handle submit: ', response);
+            this.setState((prevState) => ({
+                options1: {
+                    xaxis: {
+                        categories: [...prevState.options1.xaxis.categories, e.target.date.value]
+                    }
                 },
-                {
-                    name: prevState.series1[1].name,
-                    data: [...prevState.series1[1].data, e.target.s12.value],
-                    type: prevState.series1[1].type
-                }
-            ],
-            series2: [
-                {
-                    name: prevState.series2[0].name,
-                    data: [...prevState.series2[0].data, e.target.s21.value],
-                    type: prevState.series2[0].type
-                },
-                {
-                    name: prevState.series2[1].name,
-                    data: [...prevState.series2[1].data, e.target.s22.value],
-                    type: prevState.series2[1].type
-                }
-            ]
-        })); 
+                series1: [
+                    {
+                        name: prevState.series1[0].name,
+                        data: [...prevState.series1[0].data, e.target.s11.value],
+                        type: prevState.series1[0].type
+                    },
+                    {
+                        name: prevState.series1[1].name,
+                        data: [...prevState.series1[1].data, e.target.s12.value],
+                        type: prevState.series1[1].type
+                    }
+                ],
+                series2: [
+                    {
+                        name: prevState.series2[0].name,
+                        data: [...prevState.series2[0].data, e.target.s21.value],
+                        type: prevState.series2[0].type
+                    },
+                    {
+                        name: prevState.series2[1].name,
+                        data: [...prevState.series2[1].data, e.target.s22.value],
+                        type: prevState.series2[1].type
+                    }
+                ]
+            })); 
+        });
     }
 
     render() {
@@ -85,7 +135,7 @@ class Topics extends Component {
                 <div className="row flex-row-reverse">
                     <div className="col-12 col-sm-6">
                         <div className="card">
-                            <div className="card-header">Havi bontás</div>
+                            <div className="card-header">Új eredmény hozzáadása</div>
                             <div className="card-body">
                                 <form onSubmit={this.handleSubmit} className="w-100 d-flex align-items-end">
                                     <TopicInput title="Dátum" id="date"/>

@@ -70520,37 +70520,93 @@ var Topics = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(Topics, [{
+    key: "getTopics",
+    value: function getTopics() {
+      axios.get('/topics').then(function (response) {
+        return console.log(response.data);
+      }
+      /*
+          this.setState({
+              options1: {
+                  xaxis: {
+                      categories: [...response.data.date]
+                  }
+              },
+              series1: [
+                  {
+                      name: "Series1-1",
+                      data: [...response.data.s11],
+                      type: "bar"
+                  }, 
+                  {
+                      name: "Series1-2",
+                      data: [...response.data.s12],
+                      type: "line"
+                  }, 
+              ],
+              series2: [
+                  {
+                      name: "Series2-1",
+                      data: [...response.data.s21],
+                      type: "area"
+                  }, 
+                  {
+                      name: "Series2-2",
+                      data: [...response.data.s22],
+                      type: "bar"
+                  }, 
+              ]
+          }) */
+      );
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getTopics();
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       e.persist(); //console.log(e.target.date.value);
 
-      this.setState(function (prevState) {
-        return {
-          options1: {
-            xaxis: {
-              categories: [].concat(_toConsumableArray(prevState.options1.xaxis.categories), [e.target.date.value])
-            }
-          },
-          series1: [{
-            name: prevState.series1[0].name,
-            data: [].concat(_toConsumableArray(prevState.series1[0].data), [e.target.s11.value]),
-            type: prevState.series1[0].type
-          }, {
-            name: prevState.series1[1].name,
-            data: [].concat(_toConsumableArray(prevState.series1[1].data), [e.target.s12.value]),
-            type: prevState.series1[1].type
-          }],
-          series2: [{
-            name: prevState.series2[0].name,
-            data: [].concat(_toConsumableArray(prevState.series2[0].data), [e.target.s21.value]),
-            type: prevState.series2[0].type
-          }, {
-            name: prevState.series2[1].name,
-            data: [].concat(_toConsumableArray(prevState.series2[1].data), [e.target.s22.value]),
-            type: prevState.series2[1].type
-          }]
-        };
+      axios.post('/topics', {
+        date: e.target.date.value,
+        s11: e.target.s11.value,
+        s12: e.target.s12.value,
+        s21: e.target.s21.value,
+        s22: e.target.s22.value
+      }).then(function (response) {
+        //console.log('from handle submit: ', response);
+        _this2.setState(function (prevState) {
+          return {
+            options1: {
+              xaxis: {
+                categories: [].concat(_toConsumableArray(prevState.options1.xaxis.categories), [e.target.date.value])
+              }
+            },
+            series1: [{
+              name: prevState.series1[0].name,
+              data: [].concat(_toConsumableArray(prevState.series1[0].data), [e.target.s11.value]),
+              type: prevState.series1[0].type
+            }, {
+              name: prevState.series1[1].name,
+              data: [].concat(_toConsumableArray(prevState.series1[1].data), [e.target.s12.value]),
+              type: prevState.series1[1].type
+            }],
+            series2: [{
+              name: prevState.series2[0].name,
+              data: [].concat(_toConsumableArray(prevState.series2[0].data), [e.target.s21.value]),
+              type: prevState.series2[0].type
+            }, {
+              name: prevState.series2[1].name,
+              data: [].concat(_toConsumableArray(prevState.series2[1].data), [e.target.s22.value]),
+              type: prevState.series2[1].type
+            }]
+          };
+        });
       });
     }
   }, {
@@ -70566,7 +70622,7 @@ var Topics = /*#__PURE__*/function (_Component) {
         className: "card"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, "Havi bont\xE1s"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\xDAj eredm\xE9ny hozz\xE1ad\xE1sa"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
