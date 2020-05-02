@@ -42,8 +42,8 @@ class Topics extends Component {
 
     getTopics() {
         axios.get('/topics').then(response =>
-            console.log(response.data)
-            /*
+            //console.log(response.data)
+            
                 this.setState({
                     options1: {
                         xaxis: {
@@ -74,7 +74,7 @@ class Topics extends Component {
                             type: "bar"
                         }, 
                     ]
-                }) */
+                }) 
             );
     }
 

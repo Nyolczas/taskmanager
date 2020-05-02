@@ -70522,42 +70522,37 @@ var Topics = /*#__PURE__*/function (_Component) {
   _createClass(Topics, [{
     key: "getTopics",
     value: function getTopics() {
+      var _this2 = this;
+
       axios.get('/topics').then(function (response) {
-        return console.log(response.data);
-      }
-      /*
-          this.setState({
-              options1: {
-                  xaxis: {
-                      categories: [...response.data.date]
-                  }
-              },
-              series1: [
-                  {
-                      name: "Series1-1",
-                      data: [...response.data.s11],
-                      type: "bar"
-                  }, 
-                  {
-                      name: "Series1-2",
-                      data: [...response.data.s12],
-                      type: "line"
-                  }, 
-              ],
-              series2: [
-                  {
-                      name: "Series2-1",
-                      data: [...response.data.s21],
-                      type: "area"
-                  }, 
-                  {
-                      name: "Series2-2",
-                      data: [...response.data.s22],
-                      type: "bar"
-                  }, 
-              ]
-          }) */
-      );
+        return (//console.log(response.data)
+          _this2.setState({
+            options1: {
+              xaxis: {
+                categories: _toConsumableArray(response.data.date)
+              }
+            },
+            series1: [{
+              name: "Series1-1",
+              data: _toConsumableArray(response.data.s11),
+              type: "bar"
+            }, {
+              name: "Series1-2",
+              data: _toConsumableArray(response.data.s12),
+              type: "line"
+            }],
+            series2: [{
+              name: "Series2-1",
+              data: _toConsumableArray(response.data.s21),
+              type: "area"
+            }, {
+              name: "Series2-2",
+              data: _toConsumableArray(response.data.s22),
+              type: "bar"
+            }]
+          })
+        );
+      });
     }
   }, {
     key: "componentDidMount",
@@ -70567,7 +70562,7 @@ var Topics = /*#__PURE__*/function (_Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       e.preventDefault();
       e.persist(); //console.log(e.target.date.value);
@@ -70580,7 +70575,7 @@ var Topics = /*#__PURE__*/function (_Component) {
         s22: e.target.s22.value
       }).then(function (response) {
         //console.log('from handle submit: ', response);
-        _this2.setState(function (prevState) {
+        _this3.setState(function (prevState) {
           return {
             options1: {
               xaxis: {

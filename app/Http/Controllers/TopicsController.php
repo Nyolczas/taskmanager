@@ -14,10 +14,20 @@ class TopicsController extends Controller
 
     public function index()
     {
+        $date = Topics::select('date')->pluck('date');
+        $s11 = Topics::select('s11')->pluck('s11');
+        $s12 = Topics::select('s12')->pluck('s12');
+        $s21 = Topics::select('s21')->pluck('s21');
+        $s22 = Topics::select('s22')->pluck('s22');
+        //dd($date);
         
         // return json response
         return response()->json([
-            'data' => Topics::all()
+            'date' => $date,
+            's11' => $s11,
+            's12' => $s12,
+            's21' => $s21,
+            's22' => $s22,
         ]);
     }
 
